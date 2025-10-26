@@ -469,6 +469,12 @@
             font-size: 12px;
             color: #ff00ff;
             animation: blink 1s ease-in-out infinite;
+            transition: all 0.3s ease;
+        }
+
+        .contract-address.copied::after {
+            content: '✅ COPIED';
+            animation: none;
         }
 
         @keyframes blink {
@@ -513,6 +519,12 @@
             padding: 15px 0;
             overflow: hidden;
             margin: 60px 0;
+            width: 100vw;
+            position: relative;
+            left: 50%;
+            right: 50%;
+            margin-left: -50vw;
+            margin-right: -50vw;
         }
 
         .ticker-content {
@@ -612,11 +624,11 @@
             <div class="ticker-content">
                 <span class="ticker-item">🚀 BREAKING: Wikipedia Still Asking for Donations</span>
                 <span class="ticker-item">💎 GROKIPEDIA: Already on the Moon</span>
-                <span class="ticker-item">🔥 Centralized = NGMI</span>
+                <span class="ticker-item">🔥 Elon Musk would definitely approve this</span>
                 <span class="ticker-item">⚡ Decentralized = WAGMI</span>
                 <span class="ticker-item">🚀 BREAKING: Wikipedia Still Asking for Donations</span>
                 <span class="ticker-item">💎 GROKIPEDIA: Already on the Moon</span>
-                <span class="ticker-item">🔥 Centralized = NGMI</span>
+                <span class="ticker-item">🔥 Elon Musk would definitely approve this</span>
                 <span class="ticker-item">⚡ Decentralized = WAGMI</span>
             </div>
         </div>
@@ -641,7 +653,7 @@
         <section class="contract">
             <h2 class="section-title">Contract Address</h2>
             <p style="color: #ff00ff; font-size: 18px; margin-bottom: 20px;">Send it to your degenerate friends 👇</p>
-            <div class="contract-address" onclick="copyToClipboard(this.textContent)">
+            <div class="contract-address" id="contractAddress" onclick="copyToClipboard(this.textContent, this)">
                 6HFnmGqFqLN3c54ZwgQ43FmE5PpPVD1vR1K5Fhg7pump
             </div>
         </section>
@@ -706,10 +718,12 @@
         }
 
         // Copy to clipboard function
-        function copyToClipboard(text) {
-            navigator.clipboard.writeText(text.trim()).then(() => {
-                alert('🚀 Contract copied! Now go ape in! 💎');
-            });
+        function copyToClipboard(text, element) {
+            navigator.clipboard.writeText(text.trim());
+            element.classList.add('copied');
+            setTimeout(() => {
+                element.classList.remove('copied');
+            }, 2000);
         }
 
         // Random stat updates for the lols

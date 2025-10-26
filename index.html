@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>$Grokipedia - The Future of Knowledge</title>
+    <title>$Grokipedia - Wikipedia is NGMI</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            cursor: none !important;
         }
 
         body {
@@ -16,6 +17,22 @@
             background: #000;
             color: #fff;
             overflow-x: hidden;
+        }
+
+        .custom-cursor {
+            position: fixed;
+            width: 64px;
+            height: 64px;
+            pointer-events: none;
+            z-index: 99999;
+            transform: translate(-50%, -50%);
+            transition: transform 0.1s ease;
+        }
+
+        .custom-cursor img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
         }
 
         .stars {
@@ -42,6 +59,25 @@
             50% { opacity: 1; }
         }
 
+        .shooting-star {
+            position: absolute;
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #00f5ff, transparent);
+            animation: shoot 3s linear infinite;
+        }
+
+        @keyframes shoot {
+            0% {
+                transform: translateX(-100px) translateY(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(1000px) translateY(500px);
+                opacity: 0;
+            }
+        }
+
         .container {
             position: relative;
             z-index: 2;
@@ -55,6 +91,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
         }
 
         .logo-text {
@@ -64,6 +101,26 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .wagmi-badge {
+            background: linear-gradient(135deg, #00f5ff, #7b2ff7);
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 14px;
+            animation: wiggle 1s ease-in-out infinite;
+        }
+
+        @keyframes wiggle {
+            0%, 100% { transform: rotate(-3deg); }
+            50% { transform: rotate(3deg); }
         }
 
         .hero {
@@ -80,18 +137,42 @@
         .logo-image {
             width: 250px;
             height: 250px;
-            animation: float 6s ease-in-out infinite, glow 3s ease-in-out infinite;
+            animation: float 6s ease-in-out infinite, glow 3s ease-in-out infinite, spin 20s linear infinite;
             filter: drop-shadow(0 0 40px rgba(0, 245, 255, 0.6));
         }
 
         @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(5deg); }
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
         }
 
         @keyframes glow {
             0%, 100% { filter: drop-shadow(0 0 40px rgba(0, 245, 255, 0.6)); }
             50% { filter: drop-shadow(0 0 60px rgba(123, 47, 247, 0.8)); }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg) translateY(0px); }
+            50% { transform: rotate(180deg) translateY(-20px); }
+            100% { transform: rotate(360deg) translateY(0px); }
+        }
+
+        .moon-badge {
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            background: #ff00ff;
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            animation: bounce 1s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
 
         h1 {
@@ -103,13 +184,35 @@
             background-clip: text;
             font-weight: 900;
             letter-spacing: -2px;
+            animation: glitch 5s infinite;
+        }
+
+        @keyframes glitch {
+            0%, 90%, 100% { transform: translate(0); }
+            92% { transform: translate(-2px, 2px); }
+            94% { transform: translate(2px, -2px); }
+            96% { transform: translate(-2px, -2px); }
+            98% { transform: translate(2px, 2px); }
         }
 
         .subtitle {
             font-size: 24px;
             color: #a0a0a0;
-            margin-bottom: 50px;
+            margin-bottom: 30px;
             font-weight: 300;
+        }
+
+        .roast {
+            font-size: 20px;
+            color: #ff00ff;
+            margin-bottom: 50px;
+            font-style: italic;
+            animation: fadeInOut 3s ease-in-out infinite;
+        }
+
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 1; }
         }
 
         .cta-buttons {
@@ -133,6 +236,29 @@
             overflow: hidden;
         }
 
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn span {
+            position: relative;
+            z-index: 1;
+        }
+
         .btn-primary {
             background: linear-gradient(135deg, #00f5ff, #7b2ff7);
             color: #fff;
@@ -140,7 +266,7 @@
         }
 
         .btn-primary:hover {
-            transform: translateY(-3px);
+            transform: translateY(-3px) scale(1.05);
             box-shadow: 0 15px 50px rgba(0, 245, 255, 0.5);
         }
 
@@ -154,12 +280,91 @@
         .btn-secondary:hover {
             background: rgba(255, 255, 255, 0.2);
             border-color: #00f5ff;
-            transform: translateY(-3px);
+            transform: translateY(-3px) scale(1.05);
+        }
+
+        .degen-stats {
+            display: flex;
+            gap: 40px;
+            justify-content: center;
+            margin-top: 60px;
+            flex-wrap: wrap;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid #00f5ff;
+            border-radius: 15px;
+            padding: 20px 40px;
+            backdrop-filter: blur(10px);
+            animation: borderGlow 2s ease-in-out infinite;
+        }
+
+        @keyframes borderGlow {
+            0%, 100% { border-color: #00f5ff; box-shadow: 0 0 20px rgba(0, 245, 255, 0.3); }
+            50% { border-color: #ff00ff; box-shadow: 0 0 30px rgba(255, 0, 255, 0.5); }
+        }
+
+        .stat-number {
+            font-size: 36px;
+            font-weight: bold;
+            color: #00f5ff;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #a0a0a0;
+            margin-top: 5px;
+        }
+
+        .roast-section {
+            padding: 100px 0;
+            background: linear-gradient(180deg, transparent, rgba(255, 0, 255, 0.1), transparent);
+        }
+
+        .roast-box {
+            background: rgba(255, 0, 255, 0.1);
+            border: 2px solid #ff00ff;
+            border-radius: 20px;
+            padding: 50px;
+            margin: 40px auto;
+            max-width: 900px;
+            text-align: center;
+            animation: shake 0.5s ease-in-out 5s infinite;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .roast-title {
+            font-size: 42px;
+            color: #ff00ff;
+            margin-bottom: 30px;
+            text-decoration: line-through;
+        }
+
+        .roast-list {
+            text-align: left;
+            margin-top: 30px;
+            font-size: 18px;
+            line-height: 2;
+        }
+
+        .roast-list li {
+            margin: 15px 0;
+            color: #a0a0a0;
+        }
+
+        .roast-list li::before {
+            content: '🚫 ';
+            margin-right: 10px;
         }
 
         .features {
             padding: 100px 0;
-            background: linear-gradient(180deg, transparent, rgba(123, 47, 247, 0.1));
         }
 
         .features-grid {
@@ -176,10 +381,29 @@
             padding: 40px;
             backdrop-filter: blur(10px);
             transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(0, 245, 255, 0.1), transparent);
+            transform: rotate(45deg);
+            animation: shine 3s linear infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
         }
 
         .feature-card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-10px) scale(1.05);
             border-color: #00f5ff;
             box-shadow: 0 20px 60px rgba(0, 245, 255, 0.2);
         }
@@ -187,17 +411,23 @@
         .feature-icon {
             font-size: 48px;
             margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
         }
 
         .feature-title {
             font-size: 24px;
             margin-bottom: 15px;
             color: #00f5ff;
+            position: relative;
+            z-index: 1;
         }
 
         .feature-description {
             color: #a0a0a0;
             line-height: 1.6;
+            position: relative;
+            z-index: 1;
         }
 
         .section-title {
@@ -228,11 +458,28 @@
             word-break: break-all;
             cursor: pointer;
             transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .contract-address::after {
+            content: '📋 CLICK TO COPY';
+            position: absolute;
+            top: -30px;
+            right: 20px;
+            font-size: 12px;
+            color: #ff00ff;
+            animation: blink 1s ease-in-out infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
         }
 
         .contract-address:hover {
             background: rgba(0, 245, 255, 0.1);
             border-color: #00f5ff;
+            transform: scale(1.02);
         }
 
         footer {
@@ -253,11 +500,36 @@
             color: #fff;
             font-size: 32px;
             transition: all 0.3s ease;
+            display: inline-block;
         }
 
         .social-link:hover {
             color: #00f5ff;
-            transform: scale(1.2);
+            transform: scale(1.2) rotate(360deg);
+        }
+
+        .ticker {
+            background: linear-gradient(90deg, #ff00ff, #00f5ff, #7b2ff7, #ff00ff);
+            padding: 15px 0;
+            overflow: hidden;
+            margin: 60px 0;
+        }
+
+        .ticker-content {
+            display: flex;
+            animation: scroll 20s linear infinite;
+            white-space: nowrap;
+        }
+
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .ticker-item {
+            padding: 0 40px;
+            font-weight: bold;
+            font-size: 18px;
         }
 
         @media (max-width: 768px) {
@@ -283,68 +555,124 @@
                 width: 100%;
                 max-width: 300px;
             }
+
+            .roast-box {
+                padding: 30px 20px;
+            }
+
+            .degen-stats {
+                gap: 20px;
+            }
         }
     </style>
 </head>
 <body>
+    <div class="custom-cursor">
+        <img src="elon.png" alt="cursor">
+    </div>
     <div class="stars" id="stars"></div>
 
     <div class="container">
         <header>
             <div class="logo-text">$GROKIPEDIA</div>
+            <div class="wagmi-badge">WAGMI 🚀</div>
         </header>
 
         <section class="hero">
             <div class="logo-container">
                 <img src="logo.jpg" alt="Grokipedia Logo" class="logo-image">
+                <div class="moon-badge">TO THE MOON 🌙</div>
             </div>
             <h1>$GROKIPEDIA</h1>
-            <p class="subtitle">The Decentralized Encyclopedia of the Future</p>
+            <p class="subtitle">Wikipedia? More like Snoozepedia 🥱</p>
+            <p class="roast">The REAL Encyclopedia - Uncensored, Decentralized, DEGEN AF</p>
+            
             <div class="cta-buttons">
-                <a href="https://pump.fun/coin/6HFnmGqFqLN3c54ZwgQ43FmE5PpPVD1vR1K5Fhg7pump" class="btn btn-primary" target="_blank">Buy on Pump.fun</a>
-                <a href="https://x.com/i/communities/1980756686630486283" class="btn btn-secondary" target="_blank">Join Community</a>
+                <a href="https://pump.fun/coin/6HFnmGqFqLN3c54ZwgQ43FmE5PpPVD1vR1K5Fhg7pump" class="btn btn-primary" target="_blank"><span>🚀 APE IN NOW</span></a>
+                <a href="https://x.com/i/communities/1980756686630486283" class="btn btn-secondary" target="_blank"><span>JOIN THE CULT</span></a>
+            </div>
+
+            <div class="degen-stats">
+                <div class="stat-card">
+                    <div class="stat-number">100x</div>
+                    <div class="stat-label">POTENTIAL 📈</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">∞</div>
+                    <div class="stat-label">DIAMOND HANDS 💎</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">0%</div>
+                    <div class="stat-label">PAPER HANDS 🧻</div>
+                </div>
             </div>
         </section>
 
-        <section class="features">
-            <h2 class="section-title">Why Grokipedia?</h2>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">🌐</div>
-                    <h3 class="feature-title">Decentralized Knowledge</h3>
-                    <p class="feature-description">A community-driven encyclopedia powered by blockchain technology, ensuring transparency and censorship resistance.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🚀</div>
-                    <h3 class="feature-title">Next-Gen Platform</h3>
-                    <p class="feature-description">Built for the future with cutting-edge technology and a vision to revolutionize how we share and access information.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">💎</div>
-                    <h3 class="feature-title">Community First</h3>
-                    <p class="feature-description">Join a thriving community of knowledge seekers and crypto enthusiasts building the encyclopedia of tomorrow.</p>
-                </div>
+        <div class="ticker">
+            <div class="ticker-content">
+                <span class="ticker-item">🚀 BREAKING: Wikipedia Still Asking for Donations</span>
+                <span class="ticker-item">💎 GROKIPEDIA: Already on the Moon</span>
+                <span class="ticker-item">🔥 Centralized = NGMI</span>
+                <span class="ticker-item">⚡ Decentralized = WAGMI</span>
+                <span class="ticker-item">🚀 BREAKING: Wikipedia Still Asking for Donations</span>
+                <span class="ticker-item">💎 GROKIPEDIA: Already on the Moon</span>
+                <span class="ticker-item">🔥 Centralized = NGMI</span>
+                <span class="ticker-item">⚡ Decentralized = WAGMI</span>
+            </div>
+        </div>
+
+        <section class="roast-section">
+            <div class="roast-box">
+                <h2 class="roast-title">Wikipedia in 2025</h2>
+                <p style="font-size: 28px; color: #00f5ff; margin-bottom: 30px;">Meanwhile, Grokipedia is literally built different 😎</p>
+                <ul class="roast-list">
+                    <li><strong>Wikipedia:</strong> "Please donate $3" (for the 847th time) 💸</li>
+                    <li><strong>Wikipedia:</strong> Controlled by random editors with god complexes 👑</li>
+                    <li><strong>Wikipedia:</strong> Censored, biased, centralized 🚫</li>
+                    <li><strong>Wikipedia:</strong> Can't even accept crypto properly 🤦</li>
+                    <li><strong>Wikipedia:</strong> Design stuck in 2005 🦕</li>
+                    <li><strong>Grokipedia:</strong> Community-owned, actually decentralized, TO THE MOON 🚀</li>
+                </ul>
             </div>
         </section>
+
+
 
         <section class="contract">
             <h2 class="section-title">Contract Address</h2>
+            <p style="color: #ff00ff; font-size: 18px; margin-bottom: 20px;">Send it to your degenerate friends 👇</p>
             <div class="contract-address" onclick="copyToClipboard(this.textContent)">
                 6HFnmGqFqLN3c54ZwgQ43FmE5PpPVD1vR1K5Fhg7pump
             </div>
-            <p style="color: #a0a0a0;">Click to copy</p>
         </section>
 
         <footer>
-            <p style="color: #a0a0a0; font-size: 18px;">Join the Knowledge Revolution</p>
+            <p style="color: #00f5ff; font-size: 24px; font-weight: bold; margin-bottom: 10px;">Not Financial Advice (But Definitely Better Than Wikipedia)</p>
+            <p style="color: #a0a0a0; font-size: 18px;">Join the Revolution. Be Early. Don't Be a Paper Hand.</p>
             <div class="social-links">
                 <a href="https://x.com/i/communities/1980756686630486283" class="social-link" target="_blank">𝕏</a>
             </div>
-            <p style="color: #666; margin-top: 40px; font-size: 14px;">© 2025 Grokipedia. All rights reserved.</p>
+            <p style="color: #666; margin-top: 40px; font-size: 14px;">© 2025 Grokipedia. WAGMI. NFA. DYOR. LFG. 🚀</p>
         </footer>
     </div>
 
     <script>
+        // Custom cursor
+        const customCursor = document.querySelector('.custom-cursor');
+        
+        document.addEventListener('mousemove', (e) => {
+            customCursor.style.left = e.clientX + 'px';
+            customCursor.style.top = e.clientY + 'px';
+        });
+
+        document.addEventListener('mouseenter', () => {
+            customCursor.style.display = 'block';
+        });
+
+        document.addEventListener('mouseleave', () => {
+            customCursor.style.display = 'none';
+        });
+
         // Generate stars
         const starsContainer = document.getElementById('stars');
         for (let i = 0; i < 150; i++) {
@@ -356,23 +684,31 @@
             starsContainer.appendChild(star);
         }
 
+        // Generate shooting stars
+        for (let i = 0; i < 5; i++) {
+            const shootingStar = document.createElement('div');
+            shootingStar.className = 'shooting-star';
+            shootingStar.style.top = Math.random() * 50 + '%';
+            shootingStar.style.left = -100 + 'px';
+            shootingStar.style.animationDelay = Math.random() * 5 + 's';
+            starsContainer.appendChild(shootingStar);
+        }
+
         // Copy to clipboard function
         function copyToClipboard(text) {
             navigator.clipboard.writeText(text.trim()).then(() => {
-                alert('Contract address copied to clipboard!');
+                alert('🚀 Contract copied! Now go ape in! 💎');
             });
         }
 
-        // Smooth scroll
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth' });
-                }
-            });
-        });
+        // Random stat updates for the lols
+        setInterval(() => {
+            const stats = document.querySelectorAll('.stat-number');
+            stats[0].style.transform = 'scale(1.1)';
+            setTimeout(() => {
+                stats[0].style.transform = 'scale(1)';
+            }, 300);
+        }, 3000);
     </script>
 </body>
 </html>
